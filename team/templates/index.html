@@ -1,11 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h3>hello world</h3>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+    {% if messages %}
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    {% endif %}
+
+    {%if tasks%}
+
+       
+
+        <table class="table table-hover" style="margin-top: 30px;">
+            <thead>
+              <tr>
+                <th scope="col"><i class="fa-solid fa-box-archive"></i></th>
+                <th scope="col">Task Name</th>
+                <th scope="col">Assigned Name</th>
+                <th scope="col">Date Assigned</th>
+                <th scope="col">Date Due</th>
+                <th scope="col">Task Importance</th>
+                <th scope="col">Completion Status</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            {% for Task in tasks %}
+            <tbody>
+            <tr class="table-primary">
+                <th scope="row"><i class="fa-regular fa-circle"></i></i></th>
+                <td>{{Task.task_name }}</td>
+                <td>{{Task.assigned_name }}</td>
+                <td>{{Task.date_assigned }}</td>
+                <td>{{Task.date_due }}</td>
+                <td>{{Task.task_importance }}</td>
+                <td>{{Task.completion_status }}</td>
+                <td><a href="#"><i class="fa-regular fa-folder-open" style="color: black;"></i></a>  &nbsp; <a href="#"><i class="fa-regular fa-trash-can" style="color: black;"></i></a></td>
+              </tr>
+            </tbody>
+            {% endfor %}
+          </table>
+
+        
+    {% else %}
+
+        <table class="table table-hover" style="margin-top: 30px;">
+            <thead>
+            <tr>
+                <th scope="col"><i class="fa-solid fa-box-archive"></i></th>
+                <th scope="col">Task Name</th>
+                <th scope="col">Assigned Name</th>
+                <th scope="col">Date Assigned</th>
+                <th scope="col">Date Due</th>
+                <th scope="col">Task Importance</th>
+                <th scope="col">Completion Status</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="table-success">
+                <th scope="row"><i class="fa-regular fa-circle"></i></i></th>
+                <td>No Data</td>
+                <td>No Data</td>
+                <td>No Data</td>
+                <td>No Data</td>
+                <td>No Data</td>
+                <td>No Data</td>
+            </tr>
+            </tbody>
+        </table>
+
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    
+
+    <div class="card text-white bg-primary mb-3" style="max-width: 30rem; margin-top: 10px; margin-left: 550px;">
+        <div class="card-header">Add Task</div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{forms.as_p}}
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+      </div>
+      
+{% endblock %}
