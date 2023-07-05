@@ -71,31 +71,62 @@ def add_task(request):
         # Render the addtask.html template with the context
         return render(request, 'addtask.html', context)
 
-def view_task(request,id):
+def view_task(request, id):
+    # Retrieve the task object with the specified id from the database
     task = AddTask.objects.get(id=id)
+    
+    # Create a context dictionary with the retrieved task object
     context = {"tasks": task}
+    
+    # Render the 'view_task.html' template with the context data
     return render(request, 'view_task.html', context)
 
-def delete_task(request,id):
+
+def delete_task(request, id):
+    # Check if the request method is POST
     if request.method == "POST":
+        # Retrieve the task object with the specified id from the database
         task = AddTask.objects.get(id=id)
+        
+        # Delete the task from the database
         task.delete()
-        messages.success(request,"Task deleted")
-        return HttpResponseRedirect (reverse('index'))
+        
+        # Add a success message to the current request's messages framework
+        messages.success(request, "Task deleted")
+        
+        # Redirect the user to the 'index' URL
+        return HttpResponseRedirect(reverse('index'))
+
     
 def edit_task(request, id):
+    # Check if the request method is POST
     if request.method == "POST":
+        # Retrieve the task object with the specified id from the database
         task = AddTask.objects.get(id=id)
+
+        # Create a form instance with the POST data and the retrieved task as the instance
         form = AddTaskForm(request.POST, instance=task)
 
+        # Check if the form data is valid
         if form.is_valid():
+            # Save the updated form data to the task object
             form.save()
+
+            # Add a success message to the current request's messages framework
             messages.success(request, "Task updated successfully")
+
+            # Redirect the user to the 'view_task' URL, passing the updated task's id as a parameter
             return redirect("view_task", id=id)
 
     else:
+        # If the request method is not POST, retrieve the task object with the specified id from the database
         task = AddTask.objects.get(id=id)
+
+        # Create a form instance with the retrieved task as the instance
         form = AddTaskForm(instance=task)
 
+    # Create a context dictionary containing the form and task objects
     context = {'forms': form, 'task': task}
+
+    # Render the 'edit_task.html' template with the context data
     return render(request, 'edit_task.html', context)
