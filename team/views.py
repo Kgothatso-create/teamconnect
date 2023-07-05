@@ -82,3 +82,20 @@ def delete_task(request,id):
         task.delete()
         messages.success(request,"Task deleted")
         return HttpResponseRedirect (reverse('index'))
+    
+def edit_task(request, id):
+    if request.method == "POST":
+        task = AddTask.objects.get(id=id)
+        form = AddTaskForm(request.POST, instance=task)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Task updated successfully")
+            return redirect("view_task", id=id)
+
+    else:
+        task = AddTask.objects.get(id=id)
+        form = AddTaskForm(instance=task)
+
+    context = {'forms': form, 'task': task}
+    return render(request, 'edit_task.html', context)

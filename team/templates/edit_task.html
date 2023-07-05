@@ -5,7 +5,7 @@
 
     <!-- Opening the card div with Bootstrap styling -->
     <div class="card text-white bg-primary mb-3" style="max-width: 30rem; margin-top: 10px; margin-left: 550px;">
-        <div class="card-header">Add Task</div>
+        <div class="card-header">Edit Task</div>
         <div class="card-body">
             <!-- Opening the form tag with the "post" method -->
             <form method="post">
@@ -17,7 +17,7 @@
                     <i class="fa-regular fa-circle-check" style="color: black;"> Submit</i>
                 </button>
             </form>
-            <button type="button" class="btn btn-secondary" style="margin-top: 10px;"><a href="{% url 'index' %}"><i class="fa-regular fa-circle-left" style="color: black;"> Back</i></a></button>
+            <button type="button" class="btn btn-secondary" style="margin-top: 10px;"><a href="{% url 'view_task' task.id %}"><i class="fa-regular fa-circle-left" style="color: black;"> Back</i></a></button>
         </div>
     </div>
 

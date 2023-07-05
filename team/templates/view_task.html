@@ -23,20 +23,23 @@
         </ul>
        
         <br>
-        <button type="button" class="btn btn-warning"><a href="#"><i class="fa-regular fa-pen-to-square" style="color: black;"> Edit</i></a></button> &nbsp; 
-
-        <form method="post" action="{% url 'delete_task' tasks.id %}" style="margin-top: 10px;">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger delete-task">
-              <i class="fa-regular fa-trash-can delete-icon" style="color: black;">Delete</i>
-            </button>
-          </form> &nbsp; 
-
+        <table>
+            <tr>
+                <td><button type="button" class="btn btn-warning"><a href="{% url 'edit_task' tasks.id %}"><i class="fa-regular fa-pen-to-square" style="color: black;"> Edit</i></a></button> &nbsp </td>
+                <td>
+                    <form method="post" action="{% url 'delete_task' tasks.id %}" style="margin-top: 10px;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger delete-task" style="margin-bottom: 10px;">
+                          <i class="fa-regular fa-trash-can delete-icon" style="color: black;"> Delete</i>
+                        </button>
+                      </form> 
+                </td>
+                <td></td>
+            </tr>
+        </table>
+        
         <button type="button" class="btn btn-secondary" style="margin-top: 10px;"><a href="{% url 'index' %}"><i class="fa-regular fa-circle-left" style="color: black;"> Back</i></a></button>
     </div>
   </div>
-        
-        
-
 
 {% endblock %}
