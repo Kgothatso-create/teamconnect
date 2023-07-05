@@ -19,5 +19,7 @@ from django.urls import path
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path('addtask/',views.add_task, name="addtask")
+    path('addtask/',views.add_task, name="addtask"),
+    path('view_task/<int:id>', views.view_task, name="view_task"),
+    path('delete_task/<int:id>', views.delete_task, name="delete_task"),
 ]
