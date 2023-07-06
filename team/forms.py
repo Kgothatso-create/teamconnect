@@ -1,5 +1,5 @@
 from django import forms
-from .models import AddTask
+from .models import AddTask, Register
 
 class AddTaskForm(forms.ModelForm):
     class Meta:
@@ -15,3 +15,7 @@ class AddTaskForm(forms.ModelForm):
             'date_due': forms.DateInput(attrs={'type': 'date'}),
         }
 
+class RegisterForm(forms.ModelForm):
+    class Meta:
+        model = Register
+        fields = ['username','first_name','last_name','email','password','confirm_password']

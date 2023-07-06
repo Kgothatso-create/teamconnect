@@ -30,3 +30,14 @@ class AddTask(models.Model):
     def __str__(self):
         # Returns a string representation of the task, including its ID and name
         return f"ID: {self.id} - {self.task_name}"
+    
+class Register(models.Model):
+    username = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField(max_length=150, blank=True, null=True)
+    password = models.CharField(max_length=255)
+    confirm_password = models.CharField(max_length=255)
+
+    def __str__self(self):
+        return f"username:{self.username} - first name: {self.first_name}"

@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
-from .models import AddTask
-from .forms import AddTaskForm
+from .models import AddTask, Register
+from .forms import AddTaskForm, RegisterForm
 from django.contrib import messages
 from django.urls import reverse
+from django.contrib.auth.hashers import make_password
 
 # Create your views here.
 def index(request):
@@ -130,3 +131,44 @@ def edit_task(request, id):
 
     # Render the 'edit_task.html' template with the context data
     return render(request, 'edit_task.html', context)
+
+from django.contrib.auth.hashers import make_password
+
+def register(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            confirm_password = form.cleaned_data['confirm_password']
+
+            # Perform password validation
+            if password != confirm_password:
+                messages.error(request, 'Passwords do not match')
+                return redirect('register')
+
+            # Hash the password
+            hashed_password = make_password(password)
+
+            # Create a new user object
+            user_object = Register(
+                username=username,
+                first_name = first_name,
+                last_name=last_name,
+                email=email,
+                password=hashed_password,
+                confirm_password=hashed_password,
+            )
+            user_object.save()
+
+            messages.success(request, 'Registration successful')
+            return redirect('index')
+
+    else:
+        form = RegisterForm()
+
+    context = {'forms': form}
+    return render(request, 'register.html', context)
