@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from .models import AddTask, Register
-from .forms import AddTaskForm, RegisterForm
+from .forms import AddTaskForm, RegistrationForm, RegisterForm
 from django.contrib import messages
 from django.urls import reverse
+from django.contrib.auth.models import User
+
 
 # Create your views here.
 def index(request):
@@ -23,7 +25,7 @@ def add_task(request):
 
     # Get all existing tasks from the database
     tasks = AddTask.objects.all()
-    user = Register.objects.all()
+    user = User.objects.all()
 
     # Check if the request method is POST (i.e., form submission)
     if request.method == 'POST':
@@ -67,7 +69,7 @@ def add_task(request):
         form = AddTaskForm()
 
         # Prepare the context with the form and tasks data
-        context = {'forms': form, 'task': tasks}
+        context = {'forms': form, 'task': tasks, 'user': user}
 
         # Render the addtask.html template with the context
         return render(request, 'addtask.html', context)
@@ -134,26 +136,60 @@ def edit_task(request, id):
 
 
 def Message(request):
+    user = User.objects.all()
+    # Retrieve all 'User' objects from the database
+    
+    messages = Register.objects.all()
+    # Retrieve all 'Register' objects (messages) from the database
+    
     if request.method == "POST":
+        # Create a RegisterForm instance with the submitted data
         form = RegisterForm(request.POST)
+        
         if form.is_valid():
+            # Extract the cleaned data from the form
             username = form.cleaned_data['username']
-            message_text = form.cleaned_data['message']
+            message = form.cleaned_data['message']
             
-            # Create a new message object
+            # Create a new message object using the extracted data
             message_object = Register.objects.create(
                 username=username,
-                message=message_text,
+                message=message
             )
-
-            messages.success(request, 'Registration successful')
+            
+            # Redirect the user to the 'message' page
             return redirect('message')
 
     else:
+        # Create an empty RegisterForm instance
         form = RegisterForm()
 
-    # Retrieve all 'message' objects from the database
-    messages = Register.objects.all()
-
-    context = {'forms': form, 'messages': messages}
+    # Prepare the context data to be passed to the template
+    context = {'forms': form, 'messages': messages, 'user': user}
+    
+    # Render the 'Message.html' template with the form, messages, and user objects
     return render(request, 'Message.html', context)
+
+
+def register(request):
+    # Retrieve all user objects from the database
+    user = User.objects.all()
+    
+    if request.method == 'POST':
+        # Create a RegistrationForm instance with the submitted data
+        form = RegistrationForm(request.POST)
+        
+        if form.is_valid():
+            # Save the form data and create a new user
+            user = form.save()
+            
+            # Redirect the user to the 'register' page
+            return redirect('register')
+    else:
+        # Create an empty RegistrationForm instance
+        form = RegistrationForm()
+    
+    # Render the 'register.html' template with the form and user objects
+    return render(request, 'register.html', {'forms': form, 'user': user})
+
+

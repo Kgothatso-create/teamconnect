@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import date
 
+
 # Create your models here.
 class AddTask(models.Model):
     # The primary key for the task
@@ -32,8 +33,17 @@ class AddTask(models.Model):
         return f"ID: {self.id} - {self.task_name}"
     
 class Register(models.Model):
+    id = models.AutoField(primary_key=True)
+    # Auto-incrementing primary key field
+    
     username = models.CharField(max_length=50)
+    # CharField for storing the username
+    
     message = models.TextField(max_length=550, default="")
-
+    # TextField for storing the message with a default value of an empty string
+    
     def __str__(self):
-        return f"username:{self.username}"
+        # Define a string representation for the Register object
+        return f"id:{self.id} - username:{self.username}"
+
+    
