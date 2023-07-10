@@ -18,4 +18,4 @@ class AddTaskForm(forms.ModelForm):
 class RegisterForm(forms.ModelForm):
     class Meta:
         model = Register
-        fields = ['username','first_name','last_name','email','password','confirm_password']
+        fields = ['username','message']
