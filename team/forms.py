@@ -24,20 +24,38 @@ class AddTaskForm(forms.ModelForm):
 
 
 class RegisterForm(forms.ModelForm):
+    # username field with a maximum length of 50 characters
+    # and widget attributes for autofocus and CSS class
     username = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'autofocus': 'True', 'class': 'form-control'}))
+
+    # message field with a maximum length of 550 characters
+    # and widget attributes for autofocus, CSS class, and initial value
     message = forms.CharField(max_length=550, widget=forms.Textarea(attrs={'autofocus': 'True', 'class': 'form-control'}), initial='')
-    
+
     class Meta:
+        # specify the model that this form is associated with
         model = Register
+
+        # specify the fields from the model that should be included in the form
         fields = ['username', 'message']
 
 
 class RegistrationForm(UserCreationForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={'autofocus':'True', 'class':'form-control'}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control'}))
+    # username field with widget attributes for autofocus and CSS class
+    username = forms.CharField(widget=forms.TextInput(attrs={'autofocus': 'True', 'class': 'form-control'}))
+    
+    # email field with widget attributes for CSS class
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    
+    # password1 field with label and widget attributes for CSS class
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    
+    # password2 field with label and widget attributes for CSS class
     password2 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
     class Meta:
+        # specify the model that this form is associated with
         model = User
+        
+        # specify the fields from the model that should be included in the form
         fields = ['username', 'password1', 'password2', 'email']

@@ -192,4 +192,14 @@ def register(request):
     # Render the 'register.html' template with the form and user objects
     return render(request, 'register.html', {'forms': form, 'user': user})
 
-
+def delete_message(request,id):
+    # Check if the request method is POST
+    if request.method == "POST":
+        # Retrieve the message object with the specified id from the database
+        messages = Register.objects.get(id=id)
+        
+        # Delete the message from the database
+        messages.delete()
+        
+        # Redirect the user to the 'message' URL
+        return HttpResponseRedirect(reverse('message'))

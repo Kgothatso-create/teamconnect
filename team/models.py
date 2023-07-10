@@ -45,5 +45,3 @@ class Register(models.Model):
     def __str__(self):
         # Define a string representation for the Register object
         return f"id:{self.id} - username:{self.username}"
-
-    
