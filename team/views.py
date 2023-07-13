@@ -9,6 +9,7 @@ from django.contrib.auth import login, authenticate, logout, update_session_auth
 
 
 # Create your views here.
+# index view for homepage
 def index(request):
     # Retrieve all tasks from the database
     tasks = AddTask.objects.all()
@@ -19,7 +20,7 @@ def index(request):
     # Render the index.html template with the provided context
     return render(request, "index.html", context)
 
-
+# view to add tasks
 def add_task(request):
     # Create an instance of the AddTaskForm
     form = AddTaskForm()
@@ -75,6 +76,7 @@ def add_task(request):
         # Render the addtask.html template with the context
         return render(request, 'addtask.html', context)
 
+# view to see details of a task
 def view_task(request, id):
     # Retrieve the task object with the specified id from the database
     task = AddTask.objects.get(id=id)
@@ -85,7 +87,7 @@ def view_task(request, id):
     # Render the 'view_task.html' template with the context data
     return render(request, 'view_task.html', context)
 
-
+# view to delete a task
 def delete_task(request, id):
     # Check if the request method is POST
     if request.method == "POST":
@@ -101,7 +103,7 @@ def delete_task(request, id):
         # Redirect the user to the 'index' URL
         return HttpResponseRedirect(reverse('index'))
 
-    
+# view to edit a task
 def edit_task(request, id):
     # Check if the request method is POST
     if request.method == "POST":
@@ -135,7 +137,7 @@ def edit_task(request, id):
     # Render the 'edit_task.html' template with the context data
     return render(request, 'edit_task.html', context)
 
-
+# view for team members to message each other
 def Message(request):
     user = User.objects.all()
     # Retrieve all 'User' objects from the database
@@ -169,9 +171,9 @@ def Message(request):
     context = {'forms': form, 'messages': messages, 'user': user}
     
     # Render the 'Message.html' template with the form, messages, and user objects
-    return render(request, 'Message.html', context)
+    return render(request, 'message.html', context)
 
-
+# view to add a user
 def register(request):
     # Retrieve all user objects from the database
     user = User.objects.all()
@@ -193,6 +195,7 @@ def register(request):
     # Render the 'register.html' template with the form and user objects
     return render(request, 'register.html', {'forms': form, 'user': user})
 
+# view to delete a message
 def delete_message(request,id):
     # Check if the request method is POST
     if request.method == "POST":
@@ -204,7 +207,8 @@ def delete_message(request,id):
         
         # Redirect the user to the 'message' URL
         return HttpResponseRedirect(reverse('message'))
-    
+
+# login view
 def login_view(request):
     if request.method == 'POST':
         # Initialize AuthenticationForm with request and POST data
@@ -250,17 +254,28 @@ def logout_view(request):
     # Redirect to the login page
     return redirect(login_url)
 
+# The view function for changing the user's password
 def change_password(request):
     if request.method == 'POST':
+        # If the request method is POST, process the form data
         form = Pass_word_changeForm(request.user, request.POST)
+        
         if form.is_valid():
+            # If the form is valid, save the new password for the user
             user = form.save()
+            
+            # Update the user's session to prevent them from being logged out
             update_session_auth_hash(request, user)
+            
+            # Display a success message
             messages.success(request, 'Your password has been changed successfully.')
-            return redirect('index')  # Replace 'profile' with the desired URL name for the user's profile page
+            
+            return redirect('index')  # Replace 'index' with the desired URL name for the user's profile page
         else:
+            # If the form is invalid, display an error message
             messages.error(request, 'Please correct the errors below.')
     else:
+        # If the request method is not POST, display an empty form
         form = Pass_word_changeForm(request.user)
     
     context = {'forms': form}

@@ -74,13 +74,13 @@ class LoginForm(AuthenticationForm):
 
 class Pass_word_changeForm(PasswordChangeForm):
        
-    # password1 field with label and widget attributes for CSS class
+    # old_password field with label and widget attributes for CSS class
     old_password = forms.CharField(label='Old password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
-    # password1 field with label and widget attributes for CSS class
+    # new_password1 field with label and widget attributes for CSS class
     new_password1 = forms.CharField(label='New password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
-    # password1 field with label and widget attributes for CSS class
+    # new_password2 field with label and widget attributes for CSS class
     new_password2 = forms.CharField(label='Confirm new password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
     class Meta:
