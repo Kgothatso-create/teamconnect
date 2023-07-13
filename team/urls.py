@@ -28,4 +28,5 @@ urlpatterns = [
     path('delete_message/<int:id>', views.delete_message, name="delete_message"),
     path('', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
+    path('change-password/', views.change_password, name='change_password'),
 ]

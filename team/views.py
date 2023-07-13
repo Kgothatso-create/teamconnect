@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from .models import AddTask, Register
-from .forms import AddTaskForm, RegistrationForm, RegisterForm, LoginForm
+from .forms import AddTaskForm, RegistrationForm, RegisterForm, LoginForm, Pass_word_changeForm
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import AuthenticationForm 
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
+
 
 # Create your views here.
 def index(request):
@@ -249,3 +249,19 @@ def logout_view(request):
 
     # Redirect to the login page
     return redirect(login_url)
+
+def change_password(request):
+    if request.method == 'POST':
+        form = Pass_word_changeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password has been changed successfully.')
+            return redirect('index')  # Replace 'profile' with the desired URL name for the user's profile page
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = Pass_word_changeForm(request.user)
+    
+    context = {'forms': form}
+    return render(request, 'change_password.html', context)

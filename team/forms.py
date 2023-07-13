@@ -1,7 +1,7 @@
 from django import forms
 from .models import AddTask, Register
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 
 class AddTaskForm(forms.ModelForm):
     class Meta:
@@ -51,7 +51,7 @@ class RegistrationForm(UserCreationForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     
     # password2 field with label and widget attributes for CSS class
-    password2 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
     class Meta:
         # specify the model that this form is associated with
@@ -71,3 +71,19 @@ class LoginForm(AuthenticationForm):
         
         # specify the fields from the model that should be included in the form
         fields = ['username', 'password']
+
+class Pass_word_changeForm(PasswordChangeForm):
+       
+    # password1 field with label and widget attributes for CSS class
+    old_password = forms.CharField(label='Old password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+    # password1 field with label and widget attributes for CSS class
+    new_password1 = forms.CharField(label='New password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+    # password1 field with label and widget attributes for CSS class
+    new_password2 = forms.CharField(label='Confirm new password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        
+        # specify the fields from the model that should be included in the form
+        fields = ['old_password', 'new_password1', 'new_password2']
