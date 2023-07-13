@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from .models import AddTask, Register
-from .forms import AddTaskForm, RegistrationForm, RegisterForm
+from .forms import AddTaskForm, RegistrationForm, RegisterForm, LoginForm
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.models import User
-
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm 
 
 # Create your views here.
 def index(request):
@@ -203,3 +204,48 @@ def delete_message(request,id):
         
         # Redirect the user to the 'message' URL
         return HttpResponseRedirect(reverse('message'))
+    
+def login_view(request):
+    if request.method == 'POST':
+        # Initialize AuthenticationForm with request and POST data
+        form = LoginForm(request, data=request.POST)
+
+        # Check if form is valid
+        if form.is_valid():
+            # Get username from POST data
+            username = request.POST['username']
+            # Get password from POST data
+            password = request.POST['password']
+            # Authenticate user
+            user = authenticate(request, username=username, password=password)
+
+            # If user is authenticated, log in the user
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'Login successful.')
+                return redirect('index')
+
+        # Show error message for invalid form
+        else:
+            messages.error(request, "Invalid username or password.")
+
+    # Create an instance of AuthenticationForm
+    form = LoginForm()
+    context = {'forms': form}
+    # Render login.html template with request and form data
+    return render(request, 'login.html', context)
+
+# User logout view
+def logout_view(request):
+
+    # Log out the user
+    logout(request)
+
+    # Show info message for successful logout
+    messages.info(request, "You have successfully logged out.") 
+
+    # Get the URL for the login page using URL reverse
+    login_url = reverse('login')
+
+    # Redirect to the login page
+    return redirect(login_url)

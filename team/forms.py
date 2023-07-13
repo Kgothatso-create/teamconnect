@@ -1,7 +1,7 @@
 from django import forms
 from .models import AddTask, Register
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 class AddTaskForm(forms.ModelForm):
     class Meta:
@@ -59,3 +59,15 @@ class RegistrationForm(UserCreationForm):
         
         # specify the fields from the model that should be included in the form
         fields = ['username', 'password1', 'password2', 'email']
+
+class LoginForm(AuthenticationForm):
+    # username field with widget attributes for autofocus and CSS class
+    username = forms.CharField(widget=forms.TextInput(attrs={'autofocus': 'True', 'class': 'form-control'}))
+       
+    # password1 field with label and widget attributes for CSS class
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        
+        # specify the fields from the model that should be included in the form
+        fields = ['username', 'password']
