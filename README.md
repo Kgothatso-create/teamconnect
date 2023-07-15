@@ -1,6 +1,6 @@
 # TeamConnect
 A basic management system
-This project is a management system designed to be run on a local server using the command prompt (cmd) or using Docker. It utilizes Django, a powerful Python web framework, for the development of the website.
+This project is a management system designed to be run on a local server using the command prompt (cmd)/Terminal or using Dockerplayground. It utilizes Django, a powerful Python web framework, for the development of the website.
 All comments and additional notes related to the project are written within the code itself.
 
 ## Prerequisites
@@ -11,7 +11,7 @@ Before running this project, make sure you have the following software installed
 ## Installation
 - Clone the repository to your local machine using the following command: git clone https://github.com/Kgothatso-create/teamconnect
 - Download zip folder
-- Navigate to the project directory: cd django_project
+- Navigate to the project directory: cd teamconnect
 - Install the required dependencies using a virtual environment
 
 ## Configuration
@@ -31,10 +31,26 @@ To run the project, you will need to generate your own Django secret key. Follow
 
 ## Application features
 #### login
+Page where users login using their username and password
+![Example Image](images/1.png)
 #### home
+Home Page view where users see all added tasks/projects
+![Example Image](images/2.png)
 #### add task
-#### view task
+Page to add tasks
+![Example Image](images/3.png)
+#### add user
+Page to add user
+![Example Image](images/4.png)
 #### group text
+Page to leave messages for other users
+![Example Image](images/5.png)
+#### change password
+page to change your password
+![Example Image](images/6.png)
+#### view task
+page to view task
+![Example Image](images/7.png)
 
 ## Contributing
 If you'd like to contribute to this project, please follow these steps:
@@ -45,7 +61,6 @@ If you'd like to contribute to this project, please follow these steps:
 - Create a new pull request on the original repository.
 
 ## Acknowledgments
-- Bob's Programming Academy for the guidance
 - Django community for their excellent web framework, which made the development of this website possible.
 
 If you encounter any issues or have any questions, please feel free to create an issue on the GitHub repository.
