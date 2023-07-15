@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+{% if messages %}
+    <div class="alert alert-dismissible alert-primary">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <!-- Check if there are any messages to display -->
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+      </div>
+{% endif %}
+
+ <!-- Opening the card div with Bootstrap styling -->
+ <div class="card text-white bg-primary mb-3" style="max-width: 30rem; margin-top: 1rem; margin-left: 30rem;">
+    <div class="card-header"> <i class="fa-solid fa-right-to-bracket"> Log IN</i></div>
+
+    <div class="card-body">
+        <!-- Opening the form tag with the "post" method -->
+        <form method="post">
+            {% csrf_token %}
+            <!-- Render the form fields as paragraph elements -->
+            {{forms.as_p}}
+            <!-- Create a submit button -->
+            <button type="submit" class="btn btn-success">
+                <i class="fa-regular fa-circle-check" style="color: black;"> LOGIN</i>
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

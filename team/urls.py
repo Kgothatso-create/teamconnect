@@ -18,5 +18,15 @@ from team import views
 from django.urls import path
 
 urlpatterns = [
-    path('', views.index, name="index"),
+    path('index/', views.index, name="index"),
+    path('addtask/',views.add_task, name="addtask"),
+    path('view_task/<int:id>', views.view_task, name="view_task"),
+    path('delete_task/<int:id>', views.delete_task, name="delete_task"),
+    path('edit_task/<int:id>', views.edit_task, name="edit_task"),
+    path('message/', views.Message, name="message"),
+    path('register/', views.register, name='register'),
+    path('delete_message/<int:id>', views.delete_message, name="delete_message"),
+    path('', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('change-password/', views.change_password, name='change_password'),
 ]
