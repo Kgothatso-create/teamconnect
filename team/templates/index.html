@@ -2,16 +2,20 @@
 {% load static %}
 {% block body %}
 
-    {% if messages %}
+{% if messages %}
+    <div class="alert alert-dismissible alert-primary">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <!-- Check if there are any messages to display -->
         {% for message in messages %}
-            {{message}}
+            {{ message }}
         {% endfor %}
-    {% endif %}
+      </div>
+{% endif %}
 
-    {%if tasks%}
+    <!-- Check if there are any tasks -->
+    {% if tasks %}
 
-       
-
+        <!-- Display tasks in a table -->
         <table class="table table-hover" style="margin-top: 30px;">
             <thead>
               <tr>
@@ -29,21 +33,32 @@
             <tbody>
             <tr class="table-primary">
                 <th scope="row"><i class="fa-regular fa-circle"></i></i></th>
-                <td>{{Task.task_name }}</td>
-                <td>{{Task.assigned_name }}</td>
-                <td>{{Task.date_assigned }}</td>
-                <td>{{Task.date_due }}</td>
-                <td>{{Task.task_importance }}</td>
-                <td>{{Task.completion_status }}</td>
-                <td><a href="#"><i class="fa-regular fa-folder-open" style="color: black;"></i></a>  &nbsp; <a href="#"><i class="fa-regular fa-trash-can" style="color: black;"></i></a></td>
+                <td>{{ Task.task_name }}</td>
+                <td>{{ Task.assigned_name }}</td>
+                <td>{{ Task.date_assigned }}</td>
+                <td>{{ Task.date_due }}</td>
+                <td>{{ Task.task_importance }}</td>
+                <td>{{ Task.completion_status }}</td>
+                <td>
+                    <button class="btn btn-success">
+                        <a href="{% url 'view_task' Task.id %}"><i class="fa-regular fa-folder-open" style="color: black;"> Open</i></a>
+                    </button>  &nbsp; 
+                    <form method="post" action="{% url 'delete_task' Task.id %}" style="margin-top: 10px;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger delete-task" style="margin-bottom: 5px;">
+                            <i class="fa-regular fa-trash-can delete-icon" style="color: black;"> Delete</i>
+                        </button>
+                    </form>
+                </td>
+
               </tr>
             </tbody>
             {% endfor %}
           </table>
 
-        
     {% else %}
 
+        <!-- Display a message when there are no tasks -->
         <table class="table table-hover" style="margin-top: 30px;">
             <thead>
             <tr>
@@ -54,7 +69,6 @@
                 <th scope="col">Date Due</th>
                 <th scope="col">Task Importance</th>
                 <th scope="col">Completion Status</th>
-
             </tr>
             </thead>
             <tbody>

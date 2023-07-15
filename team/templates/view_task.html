@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<div class="card text-white bg-primary mb-3" style="max-width: 40rem; margin-top: 10px; margin-left: 450px;">
+    <div class="card-header">Task Details</div>
+    <div class="card-body">
+        <ul>
+            <!-- Display the task name -->
+            <p> <h6>Task name:</h6> {{ tasks.task_name }}</p>
+            <hr>
+            <!-- Display the assigned name -->
+            <p><h6>Assigned to:</h6> {{ tasks.assigned_name }}</p>
+            <hr>
+            <!-- Display the date assigned -->
+            <p><h6>Date assigned:</h6> {{ tasks.date_assigned }}</p>
+            <hr>
+            <!-- Display the due date -->
+            <p><h6>Due date:</h6> {{ tasks.date_due }}</p>
+            <hr>
+            <!-- Display the task importance -->
+            <p><h6>Task importance:</h6> {{ tasks.task_importance }}</p>
+            <hr>
+            <!-- Display the task completion status -->
+            <p><h6>Task completion status:</h6> {{ tasks.completion_status }}</p>
+            <hr>
+            <!-- Display the task details -->
+            <p><h6>Task details:</h6> {{ tasks.task_details }}</p>
+        </ul>
+
+        <br>
+        <table>
+            <tr>
+                <!-- Button to edit the task -->
+                <td><button type="button" class="btn btn-warning"><a href="{% url 'edit_task' tasks.id %}"><i class="fa-regular fa-pen-to-square" style="color: black;"> Edit</i></a></button> &nbsp </td>
+                <!-- Form to delete the task -->
+                <td>
+                    <form method="post" action="{% url 'delete_task' tasks.id %}" style="margin-top: 10px;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger delete-task" style="margin-bottom: 10px;">
+                          <i class="fa-regular fa-trash-can delete-icon" style="color: black;"> Delete</i>
+                        </button>
+                      </form> 
+                </td>
+                <td></td>
+            </tr>
+        </table>
+
+        <!-- Button to go back to the index page -->
+        <button type="button" class="btn btn-secondary" style="margin-top: 10px;"><a href="{% url 'index' %}"><i class="fa-regular fa-circle-left" style="color: black;"> Back</i></a></button>
+    </div>
+</div>
+
+{% endblock %}
