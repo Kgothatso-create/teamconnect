@@ -14,7 +14,7 @@ class AddTaskForm(forms.ModelForm):
         # Define widgets to customize the HTML input types
         widgets = {
             'task_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'assigned_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'assigned_name': forms.Select(attrs={'class': 'form-control'}),
             'date_assigned': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'date_due': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'task_details': forms.Textarea(attrs={'class': 'form-control'}),
@@ -24,9 +24,6 @@ class AddTaskForm(forms.ModelForm):
 
 
 class RegisterForm(forms.ModelForm):
-    # username field with a maximum length of 50 characters
-    # and widget attributes for autofocus and CSS class
-    username = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'autofocus': 'True', 'class': 'form-control'}))
 
     # message field with a maximum length of 550 characters
     # and widget attributes for autofocus, CSS class, and initial value
@@ -38,6 +35,12 @@ class RegisterForm(forms.ModelForm):
 
         # specify the fields from the model that should be included in the form
         fields = ['username', 'message']
+
+        # Define widgets to customize the HTML input types
+        # and widget attributes for autofocus and CSS class
+        widgets = {
+            'username': forms.Select(attrs={'class': 'form-control'}),
+        }
 
 
 class RegistrationForm(UserCreationForm):

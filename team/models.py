@@ -1,7 +1,6 @@
 from django.db import models
 from datetime import date
 
-
 # Create your models here.
 class AddTask(models.Model):
     # The primary key for the task
@@ -10,8 +9,14 @@ class AddTask(models.Model):
     # The name of the task (maximum length: 50 characters)
     task_name = models.CharField(max_length=50)
 
+    @staticmethod
+    def get_user_choices():
+        users = User.objects.all()
+        choices = [(user.username, user.username) for user in users]
+        return choices
+
     # The name of the person assigned to the task (maximum length: 50 characters)
-    assigned_name = models.CharField(max_length=50)
+    assigned_name = models.CharField(max_length=50, choices=get_user_choices())
 
     # The date the task was assigned (default value: today's date)
     date_assigned = models.DateField(default=date.today)
@@ -35,8 +40,14 @@ class AddTask(models.Model):
 class Register(models.Model):
     id = models.AutoField(primary_key=True)
     # Auto-incrementing primary key field
+
+    @staticmethod
+    def get_user_choices():
+        users = User.objects.all()
+        choices = [(user.username, user.username) for user in users]
+        return choices
     
-    username = models.CharField(max_length=50)
+    username = models.CharField(max_length=50, choices=get_user_choices())
     # CharField for storing the username
     
     message = models.TextField(max_length=550, default="")

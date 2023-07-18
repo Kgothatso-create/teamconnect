@@ -11,8 +11,16 @@ from django.contrib.auth import login, authenticate, logout, update_session_auth
 # Create your views here.
 # index view for homepage
 def index(request):
-    # Retrieve all tasks from the database
-    tasks = AddTask.objects.all()
+    # Retrieve the logged-in user
+    user = request.user
+    
+    # Retrieve tasks based on user role
+    if user.is_superuser:
+        # For admin/superuser, retrieve all tasks
+        tasks = AddTask.objects.all()
+    else:
+        # For simple users, retrieve only their tasks
+        tasks = AddTask.objects.filter(assigned_name=user)
 
     # Prepare the context dictionary with the tasks data
     context = {'tasks': tasks}
